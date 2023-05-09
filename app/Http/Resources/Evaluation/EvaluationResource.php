@@ -16,10 +16,9 @@ class EvaluationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-
             'comentarios' => $this->comment,
             'estrelas'    => $this->stars,
-            'data'        => Carbon::make($this->created_at)->format('Y-m-d')
+            'date'        => Carbon::make($this->created_at)->format('Y-m-d')
         ];
     }
 }

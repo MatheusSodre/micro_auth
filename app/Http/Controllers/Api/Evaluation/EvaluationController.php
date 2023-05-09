@@ -26,6 +26,7 @@ class EvaluationController extends Controller
     public function index($company)
     {
        return EvaluationResource::collection($this->evaluationService->getEvaluationCompany($company));
+
     }
 
     /**
@@ -33,7 +34,7 @@ class EvaluationController extends Controller
      */
     public function store(StoreEvaluation $request,$company):JsonResponse
     {
-            return Response::json(new EvaluationResource($this->evaluationService->store($request->validated(),$company)),HttpResponse::HTTP_CREATED);
+        return Response::json(new EvaluationResource($this->evaluationService->store($request->validated(),$company)),HttpResponse::HTTP_CREATED);
     }
 
     /**
