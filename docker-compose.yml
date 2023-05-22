@@ -1,7 +1,7 @@
 version: "3.7"
 services:
     # imagem micro 02
-    micro_02:
+    micro_auth:
         build:
             args:
                 user: admin
@@ -14,23 +14,23 @@ services:
         volumes:
             - ./:/var/www
         networks:
-            - microservices02
+            - microAuth
 
     # nginx
     nginx:
         image: nginx:alpine
         restart: unless-stopped
         ports:
-            - 8001:80
+            - 8090:80
         volumes:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
         networks:
-            - microservices02
+            - microAuth
 
     # mysql micro 02
-    db_micro_02:
-        container_name: db_micro_02
+    db_micro_auth:
+        container_name: db_micro_auth
         image: mysql:8.0
         restart: unless-stopped
         environment:
@@ -46,10 +46,10 @@ services:
                 --collation-server=utf8mb4_unicode_ci
                 --default-authentication-plugin=mysql_native_password --sql-mode=""
         networks:
-            - microservices02
+            - microAuth
 
     # queue micro 02
-    queue_micro_02:
+    queue_micro_auth:
         build:
             args:
                 user: admin
@@ -61,18 +61,18 @@ services:
         volumes:
             - ./:/var/www
         depends_on:
-            - redis_micro_02
+            - redis_micro_auth
         networks:
-            - microservices02
+            - microAuth
 
     #redis
-    redis_micro_02:
+    redis_micro_auth:
         image: redis:latest
         ports:
             - 6379:6379
         networks:
-            - microservices02
+            - microAuth
 
 networks:
-    microservices02:
+    microAuth:
         driver: bridge

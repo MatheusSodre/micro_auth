@@ -2,10 +2,10 @@
 
 
 use App\Http\Controllers\Api\Evaluation\EvaluationController;
+use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/evaluations/{company}',[EvaluationController::class,'index']);
-Route::post('/evaluations/{company}',[EvaluationController::class,'store']);
+Route::apiResource('user',UserController::class);
 
 Route::get('/', function () {
     return response()->json(['message' => 'success']);

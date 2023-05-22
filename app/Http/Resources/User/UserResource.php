@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Evaluation;
+namespace App\Http\Resources\User;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EvaluationResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +15,10 @@ class EvaluationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'comentarios' => $this->comment,
-            'estrelas'    => $this->stars,
-            'date'        => Carbon::make($this->created_at)->format('Y-m-d')
+            'identify' => $this->uuid,
+            'name' => $this->name,
+            'email' => $this->email,
+            'permissions' => $this->permissions,
         ];
     }
 }

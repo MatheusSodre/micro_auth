@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\BaseRepositoryInterface;
+use App\Repositories\Interfaces\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class BaseRepository implements BaseRepositoryInterface
@@ -31,6 +31,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function all($relations = [], $columns = ['*']): mixed
     {
+        dd($this->model);
         return $this->model::with($relations)->get($columns);
     }
 
@@ -63,9 +64,9 @@ class BaseRepository implements BaseRepositoryInterface
      * @param  int  $id
      * @return mixed
      */
-    public function findOrFail(int $id): mixed
+    public function findOrFail($field, $id): mixed
     {
-        return $this->model->findOrFail($id);
+        return $this->model->where($field,$id)->findOrFail();
     }
 
     /**
@@ -75,9 +76,9 @@ class BaseRepository implements BaseRepositoryInterface
      * @param  array  $data
      * @return bool
      */
-    public function update(array $data, $id)
+    public function update(array $data,$field, $id)
     {
-        return $this->model->findOrFail($id)->update($data);;
+        return $this->model->findOrFail($field,$id)->update($data);
     }
 
     /**
@@ -86,9 +87,9 @@ class BaseRepository implements BaseRepositoryInterface
      * @param  Model  $entity
      * @return bool|null
      */
-    public function delete($id): bool|null
+    public function delete($field,$id): bool|null
     {
-        return $this->model->find($id)->delete();
+        return $this->model->findOrFail($field,$id)->delete();
     }
     /**
      * Update or create an entity.
