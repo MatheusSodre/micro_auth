@@ -4,6 +4,8 @@ use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use App\Repositories\User\UserRepository;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class UserService 
 {
@@ -13,20 +15,19 @@ class UserService
     }
     public function store(array $data)
     {
-        
         $data['password'] = bcrypt($data['password']);
-        $user = $this->userRepository->create($data);
-        if (!empty($data['device_name'])) {
-            return (new UserResource($user))
-                    ->additional(['token' => $user->createToken($data['device_name'])->plainTextToken]);
-        }
-        return new UserResource($user);
+        return $this->userRepository->create($data);
     }
 
     
     public function getAll()
     {
         return $this->userRepository->paginate();
+    }
+    public function getByEmail(array $data)
+    { 
+        $user = $this->userRepository->firstOrFail('email',$data['email']);
+        return $user;
     }
 
     public function getByUuid($id)

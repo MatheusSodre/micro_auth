@@ -19,6 +19,7 @@ class RegisterController extends Controller
      */
     public function store(StoreUser $request)
     {
-        return new UserResource($this->userService->store($request->validated()));
+        $user = $this->userService->store($request->validated());
+        return (new UserResource($user))->additional(['token' => $user->createToken($request->device_name)->plainTextToken]);
     }
 }
