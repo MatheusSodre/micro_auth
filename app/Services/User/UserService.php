@@ -24,7 +24,7 @@ class UserService
 
     public function getByUuid($id)
     { 
-        return $this->userRepository->findOrFail('uuid',$id);
+        return $this->userRepository->firstOrFail('uuid',$id);
     }
 
     public function update($request,$id):bool|null
