@@ -32,7 +32,6 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function all($relations = [], $columns = ['*']): mixed
     {
-        dd($this->model);
         return $this->model::with($relations)->get($columns);
     }
 
