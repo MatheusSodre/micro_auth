@@ -1,5 +1,6 @@
 <?php 
 namespace App\Services\User;
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use App\Repositories\User\UserRepository;
@@ -12,11 +13,17 @@ class UserService
     }
     public function store(array $data)
     {
+        
         $data['password'] = bcrypt($data['password']);
-        return $this->userRepository->create($data);
+        $user = $this->userRepository->create($data);
+        if (!empty($data['device_name'])) {
+            return (new UserResource($user))
+                    ->additional(['token' => $user->createToken($data['device_name'])->plainTextToken]);
+        }
+        return new UserResource($user);
     }
 
-
+    
     public function getAll()
     {
         return $this->userRepository->paginate();
