@@ -26,13 +26,21 @@ class UserService
     }
     public function getByEmail(array $data)
     { 
-        $user = $this->userRepository->firstOrFail('email',$data['email']);
-        return $user;
+        $user = $this->userRepository->first('email',$data['email']);
+        
+        if (!$user || !Hash::check($data['password'],$user->password)) {
+            
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+        
+        return (new UserResource($user))->additional(['token' => $user->createToken($data['device_name'])->plainTextToken]);
     }
 
     public function getByUuid($id)
     { 
-        return $this->userRepository->firstOrFail('uuid',$id);
+        return $this->userRepository->first('uuid',$id);
     }
 
     public function update($request,$id):bool|null

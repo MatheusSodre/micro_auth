@@ -64,9 +64,9 @@ class BaseRepository implements BaseRepositoryInterface
      * @param  int  $id
      * @return mixed
      */
-    public function firstOrFail($field, $id)
+    public function first($field, $id)
     {
-        return $this->model->where($field,$id)->firstOrFail();   
+        return $this->model->where($field,$id)->first();   
     }
 
     /**
@@ -78,7 +78,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function update(array $data,$field, $id)
     {
-        return $this->firstOrFail($field,$id)->update($data);
+        return $this->first($field,$id)->update($data);
     }
 
     /**
@@ -89,7 +89,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function delete($field,$id): bool|null
     {
-        return $this->firstOrFail($field,$id)->delete();
+        return $this->first($field,$id)->delete();
     }
     /**
      * Update or create an entity.

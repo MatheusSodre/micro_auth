@@ -6,7 +6,7 @@ namespace App\Repositories\Interfaces;
     public function all();
     public function paginate($relations = [], $limit = null, $columns = ['*']);
     public function create(array $data);
-    public function firstOrFail($field ,$id);
+    public function first($field ,$id);
     public function update(array $data,$field, $id);
     public function delete($field,$id);
     public function updateOrCreate(array $attributes, array $values);
