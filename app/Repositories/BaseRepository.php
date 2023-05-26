@@ -112,8 +112,9 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function get(array $condition = [], bool $takeOne = true): mixed
     {
-        $result = $this->model->where($condition);
-
+        
+        $result = $this->model->with($condition);
+        
         if ($takeOne) {
             return $result->first();
         }
