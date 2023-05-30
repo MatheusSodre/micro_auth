@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Http\Resources\Permissions\PermissionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,7 @@ class UserResource extends JsonResource
             'identify' => $this->uuid,
             'name' => $this->name,
             'email' => $this->email,
-            'permissions' => $this->permissions,
+            'permissions' => $this->permission,
         ];
     }
 }

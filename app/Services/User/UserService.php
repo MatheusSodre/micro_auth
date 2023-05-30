@@ -26,6 +26,7 @@ class UserService
     }
     public function getByEmail(array $data)
     { 
+        // $user = $this->userRepository->first('email',$data['email']);
         $user = $this->userRepository->first('email',$data['email']);
         
         if (!$user || !Hash::check($data['password'],$user->password)) {
