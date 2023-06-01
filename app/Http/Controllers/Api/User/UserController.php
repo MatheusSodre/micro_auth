@@ -30,14 +30,14 @@ class UserController extends Controller
     public function store(StoreUpdateUser $request)
     {
         return  new UserResource($this->userService->store($request->validated()));
-    }
+    }   
 
     /**
      * Display the specified resource.
      */
     public function show(string $uuid)
     {
-        return new UserResource($this->userService->getByUuid($uuid));
+        return new UserResource($this->userService->permissionUser($uuid));
     }
 
     /**
