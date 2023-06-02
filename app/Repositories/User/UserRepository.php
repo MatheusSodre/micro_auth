@@ -17,17 +17,15 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
        return $this->model->with('permissions')->where($field,$uuid)->first();
     }
 
-    public function userHasPermission($user,$permission)
+    public function HasPermission($user,$permission)
     {
         return $user->permissions()->where('name',$permission)->first() ? true : false;
     }
     public function addPermissionUser($request)
     {
-        
         $user = $this->model->where('uuid',$request['user'])->first(); 
-        return $user->permissions()->sync($request['permissions']);
+        return $user->permissions()->sync($request['permissions']) ? true : false;
     }
-    
 }
 
 ?>
