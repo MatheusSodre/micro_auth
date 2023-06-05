@@ -73,7 +73,6 @@ class UserTest extends TestCase
                             'Authorization' => "Bearer {$token}"
                         ])
                         ->getJson("/api/user/fake_value");
-        
         $response->assertStatus(404);
     }
 }
