@@ -61,7 +61,7 @@ class UserService
     public function userHasPermission($user,$permission)
     {   
         $userAdmin         = $this->isUserAdmin($user->email);
-        $userHasPermission = $this->userRepository->HasPermission($user,$permission);
+        $userHasPermission = $this->userRepository->hasPermission($user,$permission);
         return ($userAdmin && $userHasPermission) 
                         ? response()->json(['message' => 'successs']) 
                         : response()->json(['message' => 'unauthorized'],403);
