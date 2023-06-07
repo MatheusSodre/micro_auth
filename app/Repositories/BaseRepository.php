@@ -69,6 +69,10 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->where($field,$id)->first();   
     }
 
+    public function firstOrFail($field, $id)
+    {
+        return $this->model->where($field,$id)->firstOrFail();   
+    }
     /**
      * Update an entity.
      *
@@ -78,7 +82,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function update(array $data,$field, $id)
     {
-        return $this->first($field,$id)->update($data);
+        return $this->firstOrFail($field,$id)->update($data);
     }
 
     /**
@@ -89,7 +93,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function delete($field,$id): bool|null
     {
-        return $this->first($field,$id)->delete();
+        return $this->firstOrFail($field,$id)->delete();
     }
     /**
      * Update or create an entity.

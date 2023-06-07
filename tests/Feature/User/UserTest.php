@@ -75,4 +75,114 @@ class UserTest extends TestCase
                         ->getJson("/api/user/fake_value");
         $response->assertStatus(404);
     }
+
+    public function test_validations_store_user()
+    {
+    
+        $user = User::factory()->create();
+        $token = $user->createToken('test')->plainTextToken;
+
+        $response = $this
+                        ->withHeaders([
+                            'Authorization' => "Bearer {$token}"
+                        ])
+                        ->postJson('/api/user', []);
+                        
+        $response->assertStatus(422);
+    }
+
+    public function test_store_user()
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('test')->plainTextToken;
+        $response = $this
+                        ->withHeaders([
+                            'Authorization' => "Bearer {$token}"
+                        ])
+                        ->postJson('/api/user', [
+                            'name' => 'Matheus Sodre',
+                            'email' => 'matheus.sodree@gmail.com',
+                            'password' => '12345678',
+                        ]);
+                        
+        $response->assertStatus(201);
+    }
+
+    public function test_validation_404_update_user()
+    {
+    
+        $user = User::factory()->create();
+        $token = $user->createToken('test')->plainTextToken;
+
+        $response = $this
+                        ->withHeaders([
+                            'Authorization' => "Bearer {$token}"
+                        ])
+                        ->putJson('/api/user/fake_user', [
+                            'name' => 'matheus sodre',
+                            'email' => 'matheus@gmail.com'
+                        ]);
+                        
+        $response->assertStatus(404);
+    }
+
+    public function test_validations_update_user()
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('test')->plainTextToken;
+
+        $response = $this
+                        ->withHeaders([
+                            'Authorization' => "Bearer {$token}"
+                        ])
+                        ->putJson("/api/user/{$user->uuid}", []);
+                        
+        $response->assertStatus(422);
+    }
+
+    public function test_update_user()
+    {
+
+        $user = User::factory()->create();
+        $token = $user->createToken('test')->plainTextToken;
+
+        $response = $this
+                        ->withHeaders([
+                            'Authorization' => "Bearer {$token}"
+                        ])
+                        ->putJson("/api/user/{$user->uuid}", [
+                            'name' => 'User Updated',
+                            'email' => 'update@teste.com.br',
+                        ]);
+                        
+        $response->assertStatus(200);
+    }
+
+    public function test_validation_404_delete_user()
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('test')->plainTextToken;
+
+        $response = $this
+                        ->withHeaders([
+                            'Authorization' => "Bearer {$token}"
+                        ])
+                        ->deleteJson('api/user/fake_user');
+                        
+        $response->assertStatus(404);
+    }
+
+    public function test_delete_user()
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('test')->plainTextToken;
+
+        $response = $this
+                        ->withHeaders([
+                            'Authorization' => "Bearer {$token}"
+                        ])
+                        ->deleteJson("api/user/{$user->uuid}");
+                        
+        $response->assertStatus(200);
+    }
 }

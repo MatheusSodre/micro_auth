@@ -14,7 +14,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function permissionUser($field,$uuid)
     {
-       return $this->model->with('permissions')->where($field,$uuid)->first();
+       return $this->model->with('permissions')->where($field,$uuid)->firstOrFail();
     }
 
     public function hasPermission($user,$permission)
