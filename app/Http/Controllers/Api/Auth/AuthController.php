@@ -18,7 +18,7 @@ class AuthController extends Controller
      */
     public function auth(AuthUser $request)
     {   
-        return $this->userService->getByEmail($request->validated());
+        return $this->userService->authByEmail($request->validated());
     }
     public function logout(Request $request)
     {

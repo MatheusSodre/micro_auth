@@ -69,7 +69,7 @@ services:
     redis_micro_auth:
         image: redis:latest
         ports:
-            - 6379:6379
+            - 6378:6379
         networks:
             - microAuth
 

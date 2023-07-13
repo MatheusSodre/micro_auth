@@ -24,7 +24,7 @@ class UserService
         return $this->userRepository->paginate(['permissions']);
     }
 
-    public function getByEmail(array $data)
+    public function authByEmail(array $data)
     { 
         $user = $this->userRepository->first('email',$data['email']);
         

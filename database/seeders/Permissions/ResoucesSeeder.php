@@ -13,6 +13,11 @@ class ResoucesSeeder extends Seeder
      */
     public function run(): void
     {
+        $order = Resource::create(['name' => 'Order']);
+        $order->permissions()->create(['name' => 'send_order']);
+
+
+
         $category = Resource::create(['name' => 'Categorias']);
         $category->permissions()->create(['name' => 'visualizar_categorias']);
         $category->permissions()->create(['name' => 'visualizar_categoria']);
@@ -22,7 +27,7 @@ class ResoucesSeeder extends Seeder
         $company = Resource::create(['name' => 'Empresas']);
         $company->permissions()->create(['name' => 'visualizar_empresas']);
         $company->permissions()->create(['name' => 'visualizar_empresa']);
-        // $company->permissions()->create(['name' => 'cadastrar_empresa']);
+        $company->permissions()->create(['name' => 'cadastrar_empresa']);
         $company->permissions()->create(['name' => 'deletar_empresa']);
         $company->permissions()->create(['name' => 'editar_empresa']);
 
